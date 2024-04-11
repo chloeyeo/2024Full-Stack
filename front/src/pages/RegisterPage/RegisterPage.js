@@ -1,5 +1,6 @@
 import NavBar from "../../layout/NavBar";
 import { useForm } from "react-hook-form"; // used for validation check
+import { toast } from "react-toastify";
 
 const RegisterPage = () => {
   const {
@@ -9,9 +10,18 @@ const RegisterPage = () => {
     reset, // removes all the data user typed in as input once button clicked to submit
     watch,
   } = useForm();
-  function onSubmit(values) {
-    console.log(values);
+  function onSubmit({ email, name, password }) {
+    const body = {
+      email,
+      name,
+      password,
+    };
+    // Axios.post(url, body);
+    toast("Sign Up Complete");
+    console.log(body);
+    reset();
   }
+
   const userEmail = {
     required: "Required",
     pattern: {
@@ -61,7 +71,7 @@ const RegisterPage = () => {
               <input
                 type="text"
                 id="name"
-                className="border w-full rounded-md p-2 text-xs"
+                className="border w-full rounded-md p-2 mb-1 text-xs"
                 placeholder="Please type your username"
                 {...register("username", userName)}
               />
@@ -102,7 +112,7 @@ const RegisterPage = () => {
               <input
                 type="password"
                 id="password"
-                className="border w-full rounded-md p-2 text-xs"
+                className="border w-full rounded-md p-2 mb-1 text-xs"
                 placeholder="Please type your password"
                 {...register("password", userPassword)}
               />
@@ -122,7 +132,7 @@ const RegisterPage = () => {
               <input
                 type="password"
                 id="passwordConfirm"
-                className="border w-full rounded-md p-2 text-xs"
+                className="border w-full rounded-md p-2 mb-1 text-xs"
                 placeholder="Please type your password"
                 {...register("passwordConfirm", passwordConfirm)}
               />
@@ -132,12 +142,18 @@ const RegisterPage = () => {
                 </div>
               )}
             </div>
-            <div>
-              <button className="w-full py-2 bg-gray-800 border rounded-md text-white hover:bg-gray-500">
+            <div className="mb-4">
+              <button className="w-full py-2 bg-gray-800 rounded-md text-white hover:bg-gray-500">
                 Sign Up
               </button>
             </div>
           </form>
+          {/* should put the go to Login button OUTSIDE form otherwise won't work bc form will work */}
+          <div>
+            <button className="text-xs text-center w-full py-2 bg-yellow-400 rounded-md">
+              If ID exists please <a href="/login">Login</a>
+            </button>
+          </div>
         </div>
       </section>
     </>
