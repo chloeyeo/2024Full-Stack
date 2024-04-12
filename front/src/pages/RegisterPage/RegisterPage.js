@@ -31,7 +31,6 @@ const RegisterPage = () => {
       const response = await axios.post(url, body);
       console.log("sign up successful", response.data);
       toast.success("Sign Up Complete 😊");
-      console.log(body);
       reset();
     } catch (error) {
       console.error("request failed:", error);

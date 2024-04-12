@@ -1,4 +1,6 @@
 import { useForm } from "react-hook-form"; // used for validation check
+import { toast } from "react-toastify";
+import axios from "axios";
 
 const LoginPage = () => {
   const {
@@ -8,8 +10,19 @@ const LoginPage = () => {
     reset, // removes all the data user typed in as input once button clicked to submit
     watch,
   } = useForm({ mode: "onChange" });
-  function onSubmit(values) {
-    console.log(values);
+
+  async function onSubmit({ email, password }) {
+    const body = { email, password };
+    console.log(body);
+    try {
+      const url = "/user/login";
+      const response = await axios.post(url, body);
+      console.log("login successful", response.data);
+      toast.success("login successful 😊");
+      reset();
+    } catch (error) {
+      toast.error("login failed 😢");
+    }
   }
   const userEmail = {
     required: "Required",
