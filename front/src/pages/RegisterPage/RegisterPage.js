@@ -1,6 +1,7 @@
 import NavBar from "../../layout/NavBar";
 import { useForm } from "react-hook-form"; // used for validation check
 import { toast } from "react-toastify";
+import axios from "axios";
 
 const RegisterPage = () => {
   const {
@@ -10,16 +11,25 @@ const RegisterPage = () => {
     reset, // removes all the data user typed in as input once button clicked to submit
     watch,
   } = useForm({ mode: "onChange" });
-  function onSubmit({ email, name, password }) {
+  async function onSubmit({ email, username, password }) {
     const body = {
       email,
-      name,
+      username,
       password,
     };
-    // Axios.post(url, body);
-    toast("Sign Up Complete");
     console.log(body);
-    reset();
+    try {
+      const url = "/user/register";
+      const response = await axios.post(url, body);
+      console.log("sign up successful", response.data);
+      toast.success("Sign Up Complete 😊");
+      console.log(body);
+      reset();
+    } catch (error) {
+      console.error("request failed:", error);
+      // window key + . to use emoji
+      toast.error("Sign Up Failed 😢");
+    }
   }
 
   const userEmail = {
