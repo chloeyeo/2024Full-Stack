@@ -19,6 +19,13 @@ const RegisterPage = () => {
     };
     console.log(body);
     try {
+      // change from url="http://localhost:4000.user/register"
+      // to adding proxy: "http://localhost:4000" to package.json
+      // and changing url to "/user/register"
+      // the proxy makes our port 3000 server LOOK AS IF it is port 4000
+      // so that when we send request to port 4000 server
+      // port 4000 server will recognise as coming from the same computer
+      // and thus not throw cors error.
       const url = "/user/register";
       const response = await axios.post(url, body);
       console.log("sign up successful", response.data);
