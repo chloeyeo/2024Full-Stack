@@ -1,7 +1,8 @@
 const { Router } = require("express");
 const userRouter = Router();
 const { User } = require("../models/User");
-const { hash } = require("bcryptjs");
+const { hash, compare } = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 userRouter.get("/", async (_, res) => {
   try {
@@ -40,6 +41,43 @@ userRouter.post("/register", async (req, res) => {
     });
     await user.save();
     return res.send({ user });
+  } catch (error) {
+    return res.status(500).send({ error: error.message });
+  }
+});
+
+userRouter.post("/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    // const user = await User.findOne({ email: req.body.email });
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(400).send({ error: "email does not exist" });
+    }
+    const isMatch = await compare(password, user.password);
+    if (!isMatch) {
+      return res.status(400).send({ error: "wrong password" });
+    }
+
+    /* CREATE A TOKEN -- start -- */
+    const payload = {
+      // user._id is object data, so we convert it to string using .toHexString()
+      userid: user._id.toHexString(),
+      email: user.email,
+      role: user.role,
+    }; // payload is what to put inside the token
+    // e.g. payload consists of email or role etc, but Not password.
+    // token includes the logged in user's information but obv not the password
+    // make the token expire in an hour
+    // so that the user can no longer be stayed as logged in after an hour
+    // when user logs out, token is deleted and cannot be used
+    // when user logs in again, token is re-created
+    const accessToken = jwt.sign(payload, process.env.SECRET_KEY, {
+      expiresIn: "1h",
+    });
+    /* CREATE A TOKEN -- end -- */
+    return res.status(200).send({ user, accessToken, message: "login OK" });
   } catch (error) {
     return res.status(500).send({ error: error.message });
   }

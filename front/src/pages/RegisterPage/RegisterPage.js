@@ -11,6 +11,8 @@ const RegisterPage = () => {
     reset, // removes all the data user typed in as input once button clicked to submit
     watch,
   } = useForm({ mode: "onChange" });
+  // { mode: "onChange" } inside useForm so that validation works onInputchange
+  // instead of validation only starting after button click.
   async function onSubmit({ email, username, password }) {
     const body = {
       email,
