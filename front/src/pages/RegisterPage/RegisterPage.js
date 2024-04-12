@@ -9,7 +9,7 @@ const RegisterPage = () => {
     formState: { errors },
     reset, // removes all the data user typed in as input once button clicked to submit
     watch,
-  } = useForm();
+  } = useForm({ mode: "onChange" });
   function onSubmit({ email, name, password }) {
     const body = {
       email,
