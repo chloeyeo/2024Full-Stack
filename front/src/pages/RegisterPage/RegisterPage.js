@@ -1,4 +1,3 @@
-import NavBar from "../../layout/NavBar";
 import { useForm } from "react-hook-form"; // used for validation check
 import { toast } from "react-toastify";
 import axios from "axios";
@@ -74,7 +73,6 @@ const RegisterPage = () => {
   };
   return (
     <>
-      <NavBar />
       <section className="flex max-w-[400px]  m-auto mt-10 rounded-md border bg-white shadow-md">
         <div className="p-5 w-full">
           <h2 className="text-center text-2xl font-semibold mb-4">Sign Up</h2>

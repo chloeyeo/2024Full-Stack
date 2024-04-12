@@ -5,21 +5,29 @@ import LoginPage from "./pages/LoginPage/LoginPage";
 import { Routes, Route, NavLink, Outlet } from "react-router-dom";
 import NavBar from "./layout/NavBar";
 
-function Layout() {
-  return (
-    <>
-      <NavBar />
-    </>
-  );
-}
-
 function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<Layout />}></Route>
-        <Route path="/login" element={<LoginPage />}></Route>
-        <Route path="/register" element={<RegisterPage />}></Route>
+        <Route path="/" element={<NavBar />}></Route>
+        <Route
+          path="/login"
+          element={
+            <>
+              <NavBar />
+              <LoginPage />
+            </>
+          }
+        ></Route>
+        <Route
+          path="/register"
+          element={
+            <>
+              <NavBar />
+              <RegisterPage />
+            </>
+          }
+        ></Route>
       </Routes>
     </>
   );
