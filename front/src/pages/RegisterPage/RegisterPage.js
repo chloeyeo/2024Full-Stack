@@ -19,7 +19,7 @@ const RegisterPage = () => {
     };
     console.log(body);
     try {
-      // change from url="http://localhost:4000.user/register"
+      // change from url="http://localhost:4000/user/register"
       // to adding proxy: "http://localhost:4000" to package.json
       // and changing url to "/user/register"
       // the proxy makes our port 3000 server LOOK AS IF it is port 4000
