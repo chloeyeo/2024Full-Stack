@@ -21,7 +21,8 @@ const LoginPage = () => {
       toast.success("login successful 😊");
       reset();
     } catch (error) {
-      toast.error("login failed 😢");
+      toast.error(error.response.data.error + " 😢");
+      console.error(error.response.data.error);
     }
   }
   const userEmail = {
