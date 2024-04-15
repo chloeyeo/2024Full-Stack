@@ -1,11 +1,15 @@
 const express = require("express");
 const app = express();
+const cors = require("cors");
 
 const mongoose = require("mongoose");
 require("dotenv").config();
 const dbUrl = process.env.MONGODB_URL;
 
 app.use(express.json());
+app.use(cors()); // can access this backend from anywhere now.
+// can congifure cors so that only frontend server can access.
+// cors config security, authorization etc per each folder
 
 const { userRouter } = require("./routes/userRouter");
 

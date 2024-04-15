@@ -6,22 +6,23 @@ const jwt = require("jsonwebtoken");
 
 userRouter.get("/", async (_, res) => {
   try {
-    const users = await User.find({});
-    return res.send({ users });
+    // find() finds all, findOne() just finds a single instance.
+    const users = await User.find({}); // find all authenticated users 회원가입한 유저들
+    return res.status(200).send({ users });
   } catch (error) {
     return res.status(500).send({ error: error.message });
   }
 });
 
-userRouter.get("/:userId", async (req, res) => {
-  try {
-    const { userId } = req.params;
-    const user = await User.findById(userId);
-    return res.send({ user });
-  } catch (error) {
-    return res.status(500).send({ error: error.message });
-  }
-});
+// userRouter.get("/:userId", async (req, res) => {
+//   try {
+//     const { userId } = req.params;
+//     const user = await User.findById(userId);
+//     return res.status(200).send({ user });
+//   } catch (error) {
+//     return res.status(500).send({ error: error.message });
+//   }
+// });
 
 // userRouter.get("/register", async (req, res) => {
 //   try {
@@ -40,7 +41,7 @@ userRouter.post("/register", async (req, res) => {
       createdAt: new Date(),
     });
     await user.save();
-    return res.send({ user });
+    return res.status(200).send({ user });
   } catch (error) {
     return res.status(500).send({ error: error.message });
   }
@@ -83,30 +84,30 @@ userRouter.post("/login", async (req, res) => {
   }
 });
 
-userRouter.delete("/:userId", async (req, res) => {
-  try {
-    const { userId } = req.params;
-    const user = await User.findByIdAndDelete(userId);
-    return res.send({ user });
-  } catch (error) {
-    return res.status(500).send({ error: error.message });
-  }
-});
+// userRouter.delete("/:userId", async (req, res) => {
+//   try {
+//     const { userId } = req.params;
+//     const user = await User.findByIdAndDelete(userId);
+//     return res.status(200).send({ user });
+//   } catch (error) {
+//     return res.status(500).send({ error: error.message });
+//   }
+// });
 
-userRouter.put("/:userId", async (req, res) => {
-  try {
-    const { userId } = req.params;
-    const { username, password } = req.body;
-    const hashedPassword = await hash(password, 10);
-    const user = await User.findByIdAndUpdate(
-      userId,
-      { username, password: hashedPassword },
-      { new: true }
-    );
-    return res.send({ user });
-  } catch (error) {
-    return res.status(500).send({ error: error.message });
-  }
-});
+// userRouter.put("/:userId", async (req, res) => {
+//   try {
+//     const { userId } = req.params;
+//     const { username, password } = req.body;
+//     const hashedPassword = await hash(password, 10);
+//     const user = await User.findByIdAndUpdate(
+//       userId,
+//       { $set: { username, password: hashedPassword } },
+//       { new: true }
+//     );
+//     return res.status(200).send({ user });
+//   } catch (error) {
+//     return res.status(500).send({ error: error.message });
+//   }
+// });
 
 module.exports = { userRouter };
