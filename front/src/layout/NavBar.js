@@ -9,7 +9,7 @@ const NavBar = () => {
   ];
   return (
     <div className="w-full shadow-md">
-      <div className="container m-auto bg-blue-100 flex justify-between">
+      <div className="container m-auto  flex justify-between">
         <h1 className="font-semibold p-4">COMPANY</h1>
         <ul className="flex">
           {routes.map((route, i) => {
