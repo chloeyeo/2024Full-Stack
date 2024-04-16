@@ -34,8 +34,8 @@ export const store = configureStore({
   // ???
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
-      // middleware는 시간 등 누적되는 값을 제공
-      // stops persistor related errors
+      // middleware makes sure to serialize data before storing in localStorage.
+      // stops actions from being serialized and persisted to storage.
       serializableCheck: {
         // when getting serialized json data we can get these errors so we prevent these errors by ignoring actions
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
