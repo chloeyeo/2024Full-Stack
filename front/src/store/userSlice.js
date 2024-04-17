@@ -11,12 +11,13 @@ const initialState = {
     image: "",
     createdAt: "",
   },
-  isAuth: false,
+  // userSlice.user.isAuth
+  isAuth: false, // as soon as user goes to a page, isAuth is checked
   isLoading: false,
 };
 
 const userSlice = createSlice({
-  name: "user",
+  name: "user", // userSlice.user
   initialState,
   reducers: {},
   // extraReducers takes care of the async
