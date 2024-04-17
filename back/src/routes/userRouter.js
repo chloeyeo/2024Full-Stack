@@ -78,6 +78,8 @@ userRouter.post("/login", async (req, res) => {
       expiresIn: "1h",
     });
     /* CREATE A TOKEN -- end -- */
+    // { user, accessToken, message: "login OK" } is action.payload
+    // action.payload.accessToken, action.payload.message
     return res.status(200).send({ user, accessToken, message: "login OK" });
   } catch (error) {
     return res.status(500).send({ error: error.message });

@@ -37,7 +37,8 @@ export const store = configureStore({
       // middleware makes sure to serialize data before storing in localStorage.
       // stops actions from being serialized and persisted to storage.
       serializableCheck: {
-        // when getting serialized json data we can get these errors so we prevent these errors by ignoring actions
+        // what to get serialized and stored/persisted in storage
+        // ignore these actions i.e. don't serialize and store these in localStorage
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
     }),
