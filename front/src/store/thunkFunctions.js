@@ -26,6 +26,7 @@ export const authUser = createAsyncThunk(
     try {
       // axios here
       //   const response = await axios.post(); // instead we use axios-create
+      // sends token in header of get request
       const response = await axiosInstance.post("/user/auth"); // body with user email and id etc gets sent along the axios request
       // console.log("auth");
       return response.data;
