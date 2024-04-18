@@ -1,7 +1,7 @@
 import React from "react";
 
-const Footer = () => {
+const FooterPage = () => {
   return <div>copyright@</div>;
 };
 
-export default Footer;
+export default FooterPage;

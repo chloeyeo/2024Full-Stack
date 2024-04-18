@@ -6,7 +6,7 @@ import { Routes, Route, NavLink, Outlet, useLocation } from "react-router-dom";
 import NavBar from "./layout/NavBar";
 import { useSelector, useDispatch } from "react-redux";
 import { authUser } from "./store/thunkFunctions";
-import Footer from "./pages/Footer";
+import FooterPage from "./pages/FooterPage/FooterPage";
 import CompanyPage from "./pages/CompanyPage/CompanyPage";
 
 function Layout() {
@@ -16,7 +16,7 @@ function Layout() {
       <main>
         <Outlet />
       </main>
-      <Footer />
+      <FooterPage />
     </>
   );
 }
