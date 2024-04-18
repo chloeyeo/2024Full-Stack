@@ -8,6 +8,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { authUser } from "./store/thunkFunctions";
 import FooterPage from "./pages/FooterPage/FooterPage";
 import CompanyPage from "./pages/CompanyPage/CompanyPage";
+import NotAuthRouter from "./components/NotAuthRouter";
+import ProtectedRouter from "./components/ProtectedRouter";
 
 function Layout() {
   return (
@@ -39,9 +41,13 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
-        <Route path="/login" element={<LoginPage />}></Route>
-        <Route path="/register" element={<RegisterPage />}></Route>
-        <Route path="/company" element={<CompanyPage />}></Route>
+        <Route element={<NotAuthRouter isAuth={isAuth} />}>
+          <Route path="/login" element={<LoginPage />}></Route>
+          <Route path="/register" element={<RegisterPage />}></Route>
+        </Route>
+        <Route element={<ProtectedRouter isAuth={isAuth} />}>
+          <Route path="/company" element={<CompanyPage />}></Route>
+        </Route>
       </Route>
     </Routes>
   );
