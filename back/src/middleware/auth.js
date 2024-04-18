@@ -15,6 +15,7 @@ will get logged out automatically and will have to log in again to create new to
 
 let auth = async (req, res, next) => {
   // 1. extract token from request header
+  console.log("inside auth middleware function");
   const authHeader = req.headers.authorization;
   // && will give error if authHeader does not exist
   // where as ?. will Not give error if authHeader does not exist
@@ -23,16 +24,27 @@ let auth = async (req, res, next) => {
   // "Bearer <token>" thus we need to split(" ") and get [1] to get token only
   // after split(" ") we get [Bearer, <token>] so we access [1] to get <token>
   if (token === null) return res.sendStatus(401);
+
   try {
     const decodedToken = jwt.verify(token, process.env.SECRET_KEY);
     const userId = decodedToken.userId;
+
+    // Check if decodedToken.userId is undefined or null
+    if (!decodedToken || !decodedToken.userId) {
+      return res
+        .status(401)
+        .send({ error: "token useId is undefined or null" });
+    }
     const user = await User.findById(userId);
     if (!user) {
       res.status(400).send({ error: "user not found" });
     }
     // if user is authenticated, proceed to the next middleware/route handler
+    req.user = user; // create a new propoerty called user on the req object
+    // and assign the authenticated user object to req.user (newly created here)
     next();
   } catch (error) {
+    console.error("Error in auth middleware:", error);
     next(error);
   }
 };

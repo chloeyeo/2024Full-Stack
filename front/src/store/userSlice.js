@@ -1,12 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { loginUser } from "./thunkFunctions";
+import { loginUser, authUser } from "./thunkFunctions";
 import { toast } from "react-toastify";
 
 const initialState = {
   userData: {
     id: "",
     email: "",
-    name: "",
+    username: "",
     role: 0,
     image: "",
     createdAt: "",
@@ -22,7 +22,7 @@ const userSlice = createSlice({
   reducers: {},
   // extraReducers takes care of the async
   extraReducers: (builder) => {
-    //???
+    // loginUser = authenticaltion, authUser = authorization (to allow page visits)!
     // builder.addCase().addCase().addCase(); // ... and so on you keeo on adding .addCase();
     builder
       .addCase(loginUser.pending, (state) => {
@@ -40,6 +40,23 @@ const userSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
         toast.error(action.payload);
+        state.isAuth = false;
+      })
+      .addCase(authUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(authUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.userData = action.payload;
+        state.isAuth = true;
+      })
+      .addCase(authUser.rejected, (state, action) => {
+        state.isLoading = false;
+        // set userData back to initialState
+        state.userData = initialState.userData; // user not authenticated thus make userData to initialState
+        // remove the invalid/expired token from storage
+        localStorage.removeItem("accessToken");
+        state.error = action.payload;
         state.isAuth = false;
       });
     // signup, login, logout all goes in here

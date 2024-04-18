@@ -19,19 +19,12 @@ export const loginUser = createAsyncThunk(
   }
 );
 
-export const authUser = createAsyncThunk(
-  // 1. type (=name) 2. function
-  "user/authuser",
-  async () => {
-    try {
-      // axios here
-      //   const response = await axios.post(); // instead we use axios-create
-      // sends token in header of get request
-      const response = await axiosInstance.post("/user/auth"); // body with user email and id etc gets sent along the axios request
-      // console.log("auth");
-      return response.data;
-    } catch (error) {
-      console.error(error.message);
-    }
+export const authUser = createAsyncThunk("user/authuser", async () => {
+  try {
+    console.log("about to send get request to auth");
+    const response = await axiosInstance.get("/user/auth");
+    return response.data;
+  } catch (error) {
+    console.error(error.message);
   }
-);
+});

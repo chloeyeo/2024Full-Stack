@@ -5,6 +5,7 @@ import LoginPage from "./pages/LoginPage/LoginPage";
 import { Routes, Route, NavLink, Outlet } from "react-router-dom";
 import NavBar from "./layout/NavBar";
 import { useSelector, useDispatch } from "react-redux";
+import { authUser } from "./store/thunkFunctions";
 
 function App() {
   // isAuth is in userSlice = slice of State

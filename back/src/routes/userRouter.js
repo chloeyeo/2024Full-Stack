@@ -3,6 +3,7 @@ const userRouter = Router();
 const { User } = require("../models/User");
 const { hash, compare } = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const { auth } = require("../middleware/auth");
 
 userRouter.get("/", async (_, res) => {
   try {
@@ -88,10 +89,22 @@ userRouter.post("/login", async (req, res) => {
 
 // we use the auth middleware (middleware always goes in the middle between url and func)
 userRouter.get("/auth", auth, async (req, res) => {
+  // first goes to auth middleware function before going inside this userRouter.get function
   // receives token in header of request
+  console.log("Auth middleware executing...");
   try {
-    return res.status(200).send({ message: "auth OK" });
+    // get the req.user created from auth middleware
+    const user = {
+      id: req.user.id,
+      username: req.user.username,
+      email: req.user.email,
+      role: req.user.role,
+      image: req.user.image,
+    };
+    return res.status(200).send({ user, message: "auth OK" });
   } catch (error) {
+    // Log the error and send a 500 response with the error message
+    console.error("Error in auth middleware:", error);
     return res.status(500).send({ error: error.message });
   }
 });
