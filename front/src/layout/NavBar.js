@@ -6,6 +6,7 @@ const NavBar = () => {
     { to: "/", name: "home" },
     { to: "/login", name: "login" },
     { to: "/register", name: "register" },
+    { to: "/company", name: "company" },
   ];
   return (
     <div className="w-full shadow-md">

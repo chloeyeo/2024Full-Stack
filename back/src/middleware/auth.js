@@ -21,9 +21,11 @@ let auth = async (req, res, next) => {
   // where as ?. will Not give error if authHeader does not exist
   // we want error to be thrown => next(error) if authHeader doesn't exist
   const token = authHeader && authHeader.split(" ")[1];
+  console.log("token received");
   // "Bearer <token>" thus we need to split(" ") and get [1] to get token only
   // after split(" ") we get [Bearer, <token>] so we access [1] to get <token>
   if (token === null) return res.sendStatus(401);
+  console.log("token not null");
 
   try {
     const decodedToken = jwt.verify(token, process.env.SECRET_KEY);
@@ -39,9 +41,11 @@ let auth = async (req, res, next) => {
     if (!user) {
       res.status(400).send({ error: "user not found" });
     }
-    // if user is authenticated, proceed to the next middleware/route handler
+    console.log("user authorized");
+    // if user is indeed authenticated then user is authorized to visit page, proceed to the next middleware/route handler
     req.user = user; // create a new propoerty called user on the req object
     // and assign the authenticated user object to req.user (newly created here)
+
     next();
   } catch (error) {
     console.error("Error in auth middleware:", error);
