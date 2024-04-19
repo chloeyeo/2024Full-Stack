@@ -48,9 +48,7 @@ const userSlice = createSlice({
       })
       .addCase(authUser.rejected, (state, action) => {
         state.isLoading = false;
-        // set userData back to initialState
-        state.userData = initialState.userData; // user not authenticated thus make userData to initialState
-        // remove the invalid/expired token from storage
+        state.userData = initialState.userData;
         localStorage.removeItem("accessToken");
         state.error = action.payload;
         state.isAuth = false;
