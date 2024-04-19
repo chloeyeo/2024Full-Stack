@@ -13,7 +13,7 @@ export const loginUser = createAsyncThunk("user/loginuser", async (body, thunkAP
   }
 });
 
-export const authUser = createAsyncThunk("user/authuser", async (thunkAPI) => {
+export const authUser = createAsyncThunk("user/authuser", async (_,thunkAPI) => {
   try {
     console.log("about to send get request to auth");
     const response = await axiosInstance.get("/user/auth");
@@ -26,7 +26,7 @@ export const authUser = createAsyncThunk("user/authuser", async (thunkAPI) => {
   }
 });
 
-export const logoutUser = createAsyncThunk("user/logoutuser", async (thunkAPI) => {
+export const logoutUser = createAsyncThunk("user/logoutuser", async (_,thunkAPI) => {
   try {
     const response = await axiosInstance.post("/user/logout");
     console.log("logout");
