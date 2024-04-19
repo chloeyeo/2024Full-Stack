@@ -70,7 +70,6 @@ userRouter.post("/logout", auth, async (req, res) => {
 });
 
 userRouter.get("/auth", auth, async (req, res) => {
-  console.log("Auth middleware executing...");
   try {
     const user = {
       id: req.user.id,
