@@ -11,21 +11,16 @@ const initialState = {
     image: "",
     createdAt: "",
   },
-  // userSlice.user.isAuth
-  // state.user.isAuth (when using useSelector)
   isAuth: false, // as soon as user goes to a page, isAuth is checked
   isLoading: false,
 };
 
 const userSlice = createSlice({
-  // state.user
-  name: "user", // userSlice.user
+  name: "user",
   initialState,
   reducers: {},
   // extraReducers takes care of the async
   extraReducers: (builder) => {
-    // loginUser = authenticaltion, authUser = authorization (to allow page visits)!
-    // builder.addCase().addCase().addCase(); // ... and so on you keeo on adding .addCase();
     builder
       .addCase(loginUser.pending, (state) => {
         state.isLoading = true;
@@ -33,10 +28,9 @@ const userSlice = createSlice({
       .addCase(loginUser.fulfilled, (state, action) => {
         state.isLoading = false;
         state.userData = action.payload;
-        toast.success(action.payload.message); //.message
+        toast.success(action.payload.message);
         state.isAuth = true;
-        // put accessToken into localStorage
-        localStorage.setItem("accessToken", action.payload.accessToken); //.accessToken
+        localStorage.setItem("accessToken", action.payload.accessToken);
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.isLoading = false;
@@ -76,7 +70,6 @@ const userSlice = createSlice({
         state.error = action.payload;
         toast.error(action.payload.message);
       });
-    // signup, login, logout all goes in here
   },
 });
 
