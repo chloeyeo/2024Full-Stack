@@ -53,6 +53,7 @@ userRouter.post("/login", async (req, res) => {
       expiresIn: "1h",
     });
     /* CREATE A TOKEN -- end -- */
+    console.log("user", user);
 
     return res.status(200).send({ user, accessToken, message: "login OK" });
   } catch (error) {
@@ -64,7 +65,7 @@ userRouter.post("/logout", auth, async (req, res) => {
   try {
     return res.status(200).send({ message: "logout OK" });
   } catch (error) {
-    return res.status(500).send({ message: "logout fail" });
+    return res.status(500).send({ message: error.message });
   }
 });
 

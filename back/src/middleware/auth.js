@@ -16,7 +16,7 @@ let auth = async (req, res, next) => {
     if (!decodedToken || !decodedToken.userId) {
       return res
         .status(401)
-        .send({ error: "token useId is undefined or null" });
+        .send({ error: "token userId is undefined or null" });
     }
     const user = await User.findOne({ _id: userId });
     if (!user) {
@@ -27,7 +27,6 @@ let auth = async (req, res, next) => {
 
     next();
   } catch (error) {
-    console.error("Error in auth middleware:", error);
     next(error);
   }
 };
