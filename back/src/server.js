@@ -12,7 +12,7 @@ app.use(cors());
 const server = async function () {
   try {
     await mongoose.connect(dbUrl);
-    mongoose.set("debug", true); // to see data inputs into db
+    mongoose.set("debug", true);
     console.log("db connected");
     app.use("/user", userRouter);
     app.listen(4000, function () {

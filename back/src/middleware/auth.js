@@ -23,7 +23,7 @@ let auth = async (req, res, next) => {
       res.status(400).send({ error: "user not found" });
     }
     console.log("user authorized");
-    req.user = user; // create a new property called user on the req object
+    req.user = user;
 
     next();
   } catch (error) {

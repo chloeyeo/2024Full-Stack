@@ -11,7 +11,7 @@ const initialState = {
     image: "",
     createdAt: "",
   },
-  isAuth: false, // as soon as user goes to a page, isAuth is checked
+  isAuth: false,
   isLoading: false,
 };
 
@@ -19,7 +19,6 @@ const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {},
-  // extraReducers takes care of the async
   extraReducers: (builder) => {
     builder
       .addCase(loginUser.pending, (state) => {

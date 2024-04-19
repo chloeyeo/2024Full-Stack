@@ -26,7 +26,6 @@ const RegisterPage = () => {
       reset();
     } catch (error) {
       console.error("request failed:", error);
-      // window key + . to use emoji
       toast.error("Sign Up Failed 😢");
     }
   }

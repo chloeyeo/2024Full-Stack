@@ -8,7 +8,6 @@ const { auth } = require("../middleware/auth");
 userRouter.get("/", async (_, res) => {
   try {
     const users = await User.find({});
-    // find all authenticated users
     return res.status(200).send({ users });
   } catch (error) {
     return res.status(500).send({ error: error.message });
@@ -45,12 +44,11 @@ userRouter.post("/login", async (req, res) => {
 
     /* CREATE A TOKEN -- start -- */
     const payload = {
-      // user._id is object data, so we convert it to string using .toHexString()
       userid: user._id.toHexString(),
       email: user.email,
       role: user.role,
-    }; // payload is what to put inside the token
-    // when user logs in again, token is re-created
+    };
+
     const accessToken = jwt.sign(payload, process.env.SECRET_KEY, {
       expiresIn: "1h",
     });
