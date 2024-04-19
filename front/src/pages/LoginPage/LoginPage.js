@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form"; // used for validation check
+import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../../store/thunkFunctions";
 
@@ -7,13 +7,13 @@ const LoginPage = () => {
     register,
     handleSubmit,
     formState: { errors },
-    reset, // removes all the data user typed in as input once button clicked to submit
+    reset,
   } = useForm({ mode: "onChange" });
 
   const dispatch = useDispatch();
   async function onSubmit({ email, password }) {
     const body = { email, password };
-    dispatch(loginUser(body)); // this goes to thunk function
+    dispatch(loginUser(body));
     reset();
   }
   const userEmail = {

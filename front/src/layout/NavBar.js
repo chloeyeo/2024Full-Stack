@@ -15,7 +15,6 @@ const NavBar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   function handleLogout() {
-    // thunk function = loginUser()
     dispatch(logoutUser());
     navigate("/");
   }

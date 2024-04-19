@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form"; // used for validation check
+import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import axios from "axios";
 
@@ -7,11 +7,10 @@ const RegisterPage = () => {
     register,
     handleSubmit,
     formState: { errors },
-    reset, // removes all the data user typed in as input once button clicked to submit
+    reset,
     watch,
   } = useForm({ mode: "onChange" });
-  // { mode: "onChange" } inside useForm so that validation works onInputchange
-  // instead of validation only starting after button click.
+
   async function onSubmit({ email, username, password }) {
     const body = {
       email,
@@ -20,13 +19,6 @@ const RegisterPage = () => {
     };
     console.log(body);
     try {
-      // change from url="http://localhost:4000/user/register"
-      // to adding proxy: "http://localhost:4000" to package.json
-      // and changing url to "/user/register"
-      // the proxy makes our port 3000 server LOOK AS IF it is port 4000
-      // so that when we send request to port 4000 server
-      // port 4000 server will recognise as coming from the same computer
-      // and thus not throw cors error.
       const url = "/user/register";
       const response = await axios.post(url, body);
       console.log("sign up successful", response.data);

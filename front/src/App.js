@@ -1,5 +1,5 @@
 import "./assets/css/tailwindStyle.scss";
-import React, { useEffect } from "react"; // to use jsx
+import React, { useEffect } from "react";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import { Routes, Route, Outlet, useLocation } from "react-router-dom";
@@ -24,20 +24,13 @@ function Layout() {
 }
 
 function App() {
-  // isAuth is in userSlice = slice of State
-  // thus to get state from a component we use useSelector!
   const isAuth = useSelector((state) => state.user.isAuth);
   const dispatch = useDispatch();
   const { pathname } = useLocation();
   console.log("pathname:", pathname);
   useEffect(() => {
-    // when user visits a new page this useEffect runs
-    // as soon as user visits a page, if token.userId exists in our user db
-    // isAuth is true and thus we dispatch authUser()
-    // dispatch(function) is always thunk (instead of dispatch({action obj}))
-    // i.e. go to thunkFunctions js createAsyncThunk
     if (isAuth) dispatch(authUser());
-  }, [isAuth, dispatch, pathname]); // pathname = everytime user visits a new page
+  }, [isAuth, dispatch, pathname]);
   return (
     <Routes>
       <Route path="/" element={<Layout />}>

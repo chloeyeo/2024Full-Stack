@@ -3,7 +3,7 @@ import axiosInstance from "../utils/axios";
 
 export const loginUser = createAsyncThunk("user/loginuser", async (body) => {
   try {
-    const response = await axiosInstance.post("/user/login", body); // body with user email and id etc gets sent along the axios request
+    const response = await axiosInstance.post("/user/login", body);
     console.log("login");
     return response.data;
   } catch (error) {
