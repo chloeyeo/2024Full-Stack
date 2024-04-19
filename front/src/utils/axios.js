@@ -4,13 +4,21 @@ const axiosInstance = axios.create({
   baseURL: "http://localhost:4000",
 });
 
-
-
 axiosInstance.interceptors.request.use(
   function (config) {
-      console.log("accessToken from localStorage:",localStorage.getItem("accessToken"))
-    config.headers.Authorization =
-      "Bearer " + localStorage.getItem("accessToken");
+    // console.log(
+    //   "accessToken from localStorage:",
+    //   localStorage.getItem("accessToken")
+    // );
+    const token = localStorage.getItem("accessToken");
+    const parsedToken = JSON.parse(token);
+    console.log("token", token);
+    console.log("parsedToken", parsedToken);
+    if (token) {
+      config.headers.Authorization = `Bearer ${parsedToken}`;
+    }
+    // config.headers.Authorization =
+    //   "Bearer " + localStorage.getItem("accessToken");
     return config;
   },
   function (error) {

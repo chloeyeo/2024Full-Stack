@@ -44,7 +44,7 @@ userRouter.post("/login", async (req, res) => {
 
     /* CREATE A TOKEN -- start -- */
     const payload = {
-      userid: user._id.toHexString(),
+      userId: user._id.toHexString(),
       email: user.email,
       role: user.role,
     };

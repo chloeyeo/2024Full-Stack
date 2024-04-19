@@ -5,7 +5,7 @@ let auth = async (req, res, next) => {
   console.log("inside auth middleware function");
   const authHeader = req.headers.authorization;
   const token = authHeader && authHeader.split(" ")[1];
-  console.log("token received");
+  console.log("token received:", token);
   if (token === null) return res.sendStatus(401);
   console.log("token not null");
 
