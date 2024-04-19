@@ -2,36 +2,19 @@ import { useForm } from "react-hook-form"; // used for validation check
 import { useDispatch } from "react-redux";
 import { loginUser } from "../../store/thunkFunctions";
 
-// import { toast } from "react-toastify"; // toast는 thunk에서
-// import axios from "axios";
-
 const LoginPage = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset, // removes all the data user typed in as input once button clicked to submit
-    watch,
   } = useForm({ mode: "onChange" });
 
   const dispatch = useDispatch();
   async function onSubmit({ email, password }) {
-    // , password
     const body = { email, password };
-    // const body = { email };
     dispatch(loginUser(body)); // this goes to thunk function
     reset();
-    // console.log(body);
-    // try {
-    //   const url = "/user/login";
-    //   const response = await axios.post(url, body);
-    //   console.log("login successful", response.data);
-    //   toast.success("login successful 😊");
-    //   reset();
-    // } catch (error) {
-    //   toast.error(error.response.data.error + " 😢");
-    //   console.error(error.response.data.error);
-    // }
   }
   const userEmail = {
     required: "Required",

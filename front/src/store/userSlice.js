@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { loginUser, authUser } from "./thunkFunctions";
+import { loginUser, authUser, logoutUser } from "./thunkFunctions";
 import { toast } from "react-toastify";
 
 const initialState = {
@@ -12,11 +12,13 @@ const initialState = {
     createdAt: "",
   },
   // userSlice.user.isAuth
+  // state.user.isAuth (when using useSelector)
   isAuth: false, // as soon as user goes to a page, isAuth is checked
   isLoading: false,
 };
 
 const userSlice = createSlice({
+  // state.user
   name: "user", // userSlice.user
   initialState,
   reducers: {},
@@ -39,7 +41,7 @@ const userSlice = createSlice({
       .addCase(loginUser.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
-        toast.error(action.payload);
+        toast.error(action.payload.message);
         state.isAuth = false;
       })
       .addCase(authUser.pending, (state) => {
@@ -58,6 +60,21 @@ const userSlice = createSlice({
         localStorage.removeItem("accessToken");
         state.error = action.payload;
         state.isAuth = false;
+      })
+      .addCase(logoutUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(logoutUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.userData = initialState.userData;
+        localStorage.removeItem("accessToken");
+        state.isAuth = false;
+        toast.success(action.payload.message);
+      })
+      .addCase(logoutUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+        toast.error(action.payload.message);
       });
     // signup, login, logout all goes in here
   },

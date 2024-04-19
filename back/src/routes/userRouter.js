@@ -15,24 +15,6 @@ userRouter.get("/", async (_, res) => {
   }
 });
 
-// userRouter.get("/:userId", async (req, res) => {
-//   try {
-//     const { userId } = req.params;
-//     const user = await User.findById(userId);
-//     return res.status(200).send({ user });
-//   } catch (error) {
-//     return res.status(500).send({ error: error.message });
-//   }
-// });
-
-// userRouter.get("/register", async (req, res) => {
-//   try {
-//     return res.send("test");
-//   } catch (error) {
-//     return res.status(500).send({ error: error.message });
-//   }
-// });
-
 userRouter.post("/register", async (req, res) => {
   try {
     const hashedPassword = await hash(req.body.password, 10);
@@ -83,7 +65,17 @@ userRouter.post("/login", async (req, res) => {
     // action.payload.accessToken, action.payload.message
     return res.status(200).send({ user, accessToken, message: "login OK" });
   } catch (error) {
-    return res.status(500).send({ error: error.message });
+    // return res.status(500).send({ error: error.message });
+    return res.status(500).send({ message: error.message });
+  }
+});
+
+userRouter.post("/logout", auth, async (req, res) => {
+  try {
+    return res.status(200).send({ message: "logout OK" });
+  } catch (error) {
+    // return res.status(500).send({ message: error.message });
+    return res.status(500).send({ message: "logout fail" });
   }
 });
 
@@ -105,34 +97,8 @@ userRouter.get("/auth", auth, async (req, res) => {
   } catch (error) {
     // Log the error and send a 500 response with the error message
     console.error("Error in auth middleware:", error);
-    return res.status(500).send({ error: error.message });
+    return res.status(500).send({ message: error.message });
   }
 });
-
-// userRouter.delete("/:userId", async (req, res) => {
-//   try {
-//     const { userId } = req.params;
-//     const user = await User.findByIdAndDelete(userId);
-//     return res.status(200).send({ user });
-//   } catch (error) {
-//     return res.status(500).send({ error: error.message });
-//   }
-// });
-
-// userRouter.put("/:userId", async (req, res) => {
-//   try {
-//     const { userId } = req.params;
-//     const { username, password } = req.body;
-//     const hashedPassword = await hash(password, 10);
-//     const user = await User.findByIdAndUpdate(
-//       userId,
-//       { $set: { username, password: hashedPassword } },
-//       { new: true }
-//     );
-//     return res.status(200).send({ user });
-//   } catch (error) {
-//     return res.status(500).send({ error: error.message });
-//   }
-// });
 
 module.exports = { userRouter };

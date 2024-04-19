@@ -2,7 +2,7 @@ import "./assets/css/tailwindStyle.scss";
 import React, { useEffect } from "react"; // to use jsx
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
-import { Routes, Route, NavLink, Outlet, useLocation } from "react-router-dom";
+import { Routes, Route, Outlet, useLocation } from "react-router-dom";
 import NavBar from "./layout/NavBar";
 import { useSelector, useDispatch } from "react-redux";
 import { authUser } from "./store/thunkFunctions";

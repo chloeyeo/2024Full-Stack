@@ -31,20 +31,17 @@ let auth = async (req, res, next) => {
     const decodedToken = jwt.verify(token, process.env.SECRET_KEY);
     const userId = decodedToken.userId;
 
-    // Check if decodedToken.userId is undefined or null
     if (!decodedToken || !decodedToken.userId) {
       return res
         .status(401)
         .send({ error: "token useId is undefined or null" });
     }
-    const user = await User.findById(userId);
+    const user = await User.findOne({ _id: userId });
     if (!user) {
       res.status(400).send({ error: "user not found" });
     }
     console.log("user authorized");
-    // if user is indeed authenticated then user is authorized to visit page, proceed to the next middleware/route handler
     req.user = user; // create a new propoerty called user on the req object
-    // and assign the authenticated user object to req.user (newly created here)
 
     next();
   } catch (error) {

@@ -28,3 +28,17 @@ export const authUser = createAsyncThunk("user/authuser", async () => {
     console.error(error.message);
   }
 });
+
+export const logoutUser = createAsyncThunk(
+  // 1. type (=name) 2. function
+  "user/logoutuser",
+  async () => {
+    try {
+      const response = await axiosInstance.post("/user/logout");
+      console.log("logout");
+      return response.data;
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
+);
