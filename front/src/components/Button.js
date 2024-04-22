@@ -1,9 +1,5 @@
 import styled from "styled-components";
 
-/* this style does not apply to other components. this is a completely individual
-styling just for the ButtonWrap component in the entire app. Better than tailwind if you want individual styling.
-grammar is similar to sass, e.g. $ 
-styled.button, styled.h3, styled.div, etc*/
 const ButtonWrap = styled.button`
   padding: 5px 16px;
   display: block;
@@ -11,15 +7,15 @@ const ButtonWrap = styled.button`
   border-radius: 5px;
   color: white;
   cursor: pointer;
-  $.text-button {
+  &.text-button {
     background-color: white;
     color: black;
     border: 1px solid red;
   }
-  $.small {
+  &.small {
     font-size: 10px;
   }
-`; // a component = start with Capital letter
+`;
 
 const TitleWrap = styled.h3`
   font-weight: bold;
@@ -32,10 +28,10 @@ const ContentWrap = styled.section`
 `;
 
 const Button = ({ children, textOnly, className, ...props }) => {
+  console.log(textOnly);
   let cssClasses = textOnly ? "text-button" : "button";
   cssClasses += " " + className;
   return (
-    // replace <button> with <ButtonWrap>
     <div>
       <ButtonWrap className={cssClasses} {...props}>
         {children}

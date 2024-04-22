@@ -4,7 +4,7 @@ const MainPage = () => {
   return (
     <div>
       MainPage
-      <Button textOnly={true} className="home small" data="test">
+      <Button textOnly={true} className="home" data="test">
         Click
       </Button>
     </div>
