@@ -13,7 +13,7 @@ let auth = async (req, res, next) => {
     const decodedToken = jwt.verify(token, process.env.SECRET_KEY);
     const userId = decodedToken.userId;
 
-    if (!decodedToken || !decodedToken.userId) {
+    if (!decodedToken || !userId) {
       return res
         .status(401)
         .send({ error: "token userId is undefined or null" });

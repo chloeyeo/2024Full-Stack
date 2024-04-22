@@ -27,7 +27,7 @@ const userSlice = createSlice({
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.userData = action.payload.user;
+        state.userData = action.payload;
         console.log("state.userData after login fulfilled", state.userData);
         toast.success(action.payload.message);
         state.isAuth = true;

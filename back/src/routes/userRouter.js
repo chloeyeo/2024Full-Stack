@@ -14,6 +14,15 @@ userRouter.get("/", async (_, res) => {
   }
 });
 
+userRouter.get("/:id", async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    return res.status(200).send({ user });
+  } catch (error) {
+    return res.status(500).send({ error: error.message });
+  }
+});
+
 userRouter.post("/register", async (req, res) => {
   try {
     const hashedPassword = await hash(req.body.password, 10);

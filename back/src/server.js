@@ -3,6 +3,8 @@ const app = express();
 const cors = require("cors");
 const { userRouter } = require("./routes/userRouter");
 const mongoose = require("mongoose");
+const { blogRouter } = require("./routes/blogRouter");
+const { getFaker } = require("../faker");
 require("dotenv").config();
 const dbUrl = process.env.MONGODB_URL;
 
@@ -15,8 +17,14 @@ const server = async function () {
     mongoose.set("debug", true);
     console.log("db connected");
     app.use("/user", userRouter);
-    app.listen(4000, function () {
-      console.log("server on port 4000");
+    app.use("/blog", blogRouter);
+    app.listen(4000, async function () {
+      try {
+        console.log("server on port 4000");
+        await getFaker(10, 2);
+      } catch (error) {
+        console.error(error.message);
+      }
     });
   } catch (error) {
     console.error("unable to connect to db", error.message);
