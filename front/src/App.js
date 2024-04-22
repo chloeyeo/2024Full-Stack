@@ -10,6 +10,7 @@ import FooterPage from "./pages/FooterPage/FooterPage";
 import CompanyPage from "./pages/CompanyPage/CompanyPage";
 import NotAuthRouter from "./components/NotAuthRouter";
 import ProtectedRouter from "./components/ProtectedRouter";
+import MainPage from "./layout/Main/MainPage";
 
 function Layout() {
   return (
@@ -34,6 +35,7 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
+        <Route index element={<MainPage />} />
         <Route element={<NotAuthRouter isAuth={isAuth} />}>
           <Route path="/login" element={<LoginPage />}></Route>
           <Route path="/register" element={<RegisterPage />}></Route>

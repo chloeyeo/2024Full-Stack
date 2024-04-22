@@ -9,7 +9,7 @@ const NavBar = () => {
     { to: "/login", name: "login", auth: false },
     { to: "/register", name: "register", auth: false },
     { to: "/company", name: "company", auth: true },
-    { to: "/logout", name: "logout", auth: true },
+    { to: "", name: "logout", auth: true },
   ];
   const isAuth = useSelector((state) => state.user?.isAuth);
   const dispatch = useDispatch();
@@ -22,7 +22,7 @@ const NavBar = () => {
     <div className="w-full shadow-md">
       <div className="container m-auto  flex justify-between">
         <h1 className="font-semibold p-4">
-          <Link to="/">COMPANY</Link>
+          <Link to="/">LOGO</Link>
         </h1>
         <ul className="flex">
           {routes.map(({ to, name, auth }) => {
