@@ -18,7 +18,7 @@ const server = async function () {
     console.log("db connected");
     app.use("/user", userRouter);
     app.use("/blog", blogRouter);
-    app.listen(4000, async function () {
+    app.listen(4001, async function () {
       try {
         console.log("server on port 4000");
         // await getFaker(10, 2);

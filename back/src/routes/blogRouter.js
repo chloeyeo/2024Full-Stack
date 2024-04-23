@@ -4,13 +4,19 @@ const { Blog } = require("../models/Blog");
 const { User } = require("../models/User");
 const { mongoose } = require("mongoose");
 
-blogRouter.get("/", async (_, res) => {
+blogRouter.get("/", async (req, res) => {
   try {
-    const blogs = await Blog.find({}).populate({
-      path: "user",
-      select: "email name",
-    });
-    return res.status(200).send({ blogs });
+    let { page } = req.query; // let {page, where} = req.query;
+    page = parseInt(page); // convert to integer
+    const totalCnt = await Blog.countDocuments({}); // total number of blogs in db
+    const blogs = await Blog.find({})
+      .skip(page * 7)
+      .limit(7)
+      .populate({
+        path: "user",
+        select: "email name",
+      });
+    return res.status(200).send({ blogs, totalCount: totalCnt });
   } catch (error) {
     return res.status(500).send({ error: error.message });
   }
