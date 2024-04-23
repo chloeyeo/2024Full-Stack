@@ -32,7 +32,7 @@ function BlogPage() {
               <ListItem
                 blog={blog}
                 index={index}
-                no={totalCnt - page * 7 + index}
+                no={totalCnt - page * 7 - index}
               />
             );
           })}
