@@ -44,6 +44,7 @@ blogRouter.post("/", async (req, res) => {
     const blog = new Blog({
       ...req.body,
       user,
+      createdAt: new Date(),
     });
     await blog.save();
     return res.status(200).send({ blog });

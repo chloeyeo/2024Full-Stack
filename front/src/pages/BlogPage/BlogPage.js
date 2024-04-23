@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axiosInstance from "../../utils/axios";
+import ListItem from "./BlogComp/ListItem";
 
 function BlogPage() {
   const [blogs, setBlogs] = useState([]);
@@ -8,7 +9,7 @@ function BlogPage() {
   useEffect(() => {
     const fetchData = async (page) => {
       try {
-        const res = await axiosInstance.get("/blog", { params: { page } }); // same as {page:page}
+        const res = await axiosInstance.get("/blog", { params: { page } }); // same as {page:page} params here will be sent as query string to back
         console.log(res);
         setBlogs(res.data.blogs);
         setTotalCnt(res.data.totalCnt);
@@ -26,10 +27,7 @@ function BlogPage() {
         <ul>
           {blogs.map((blog, index) => {
             return (
-              <li key={`blog-${index}`}>
-                Title: {blog.title}/ Author Name: {blog.user.name}/ Author
-                Email: {blog.user.email}
-              </li>
+              <ListItem blog={blog} index={index} no={page * 7 + index + 1} />
             );
           })}
           totalCount: {totalCnt}
