@@ -27,7 +27,13 @@ function BlogPage() {
         <ul>
           {blogs.map((blog, index) => {
             return (
-              <ListItem blog={blog} index={index} no={page * 7 + index + 1} />
+              // <ListItem blog={blog} index={index} no={page * 7 + index + 1} />
+              // for no as count backward"
+              <ListItem
+                blog={blog}
+                index={index}
+                no={totalCnt - page * 7 + index}
+              />
             );
           })}
           totalCount: {totalCnt}
