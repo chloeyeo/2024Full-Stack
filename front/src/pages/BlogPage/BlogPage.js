@@ -3,18 +3,21 @@ import axiosInstance from "../../utils/axios";
 
 function BlogPage() {
   const [blogs, setBlogs] = useState([]);
+  const [totalCnt, setTotalCnt] = useState(0);
+  const [page, setPage] = useState(0);
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchData = async (page) => {
       try {
-        const res = await axiosInstance.get("/blog");
+        const res = await axiosInstance.get("/blog", { params: { page } }); // same as {page:page}
         console.log(res);
         setBlogs(res.data.blogs);
+        setTotalCnt(res.data.totalCnt);
       } catch (error) {
         console.error(error.message);
       }
     }; // function
-    fetchData();
-  }, []);
+    fetchData(page);
+  }, [page]);
   return (
     <div>
       {/* both container and m-auto are from tailwind m-auto to put it in center */}
@@ -29,7 +32,10 @@ function BlogPage() {
               </li>
             );
           })}
+          totalCount: {totalCnt}
         </ul>
+        {/* pagination */}
+        <div>pager</div>
       </div>
     </div>
   );

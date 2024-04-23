@@ -48,3 +48,9 @@ page uses skip = from which page to which page will we look at
 page starts from 0, so skip(page*7) means we look at first 7 pages from 0*7 = 0 to 6
 then it shows pages from 1*7 =7 to 13 i.e. shows another 7 pages
 infinite scroll shows the added up version of skip
+
+blogRouter.get("/", async (req, res) => {
+  try {
+    let { page } = req.query; // let {page, where} = req.query;
+    page = parseInt(page); // convert to integer
+    const totalCnt = await Blog.countDocuments({}); // total number of blogs in db
