@@ -21,7 +21,7 @@ const server = async function () {
     app.listen(4000, async function () {
       try {
         console.log("server on port 4000");
-        await getFaker(10, 2);
+        // await getFaker(10, 2);
       } catch (error) {
         console.error(error.message);
       }

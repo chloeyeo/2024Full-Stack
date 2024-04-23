@@ -1,0 +1,41 @@
+totalrecord
+page => skip (also used in infinite scroll)
+size => limit
+
+blog?page=1&limit=5 <- req.query (we'll just fix limit to 5 so it'll actually just be `blog?page=${page}` something like this)
+blog/:userId/comment <- req.params
+
+put nginx on docker for project deployment
+
+rsf tab in webstorm (instead of rafce for react snippets in vscode)
+
+Use tailwind to style entire structure and layout,
+to style each individual component use styled-components.
+
+For project just use tailwind only
+
+Go to Network -> Fetch/XHR -> blog -> Preview tab (under preview tab you can see all the blogs coming in
+(from request to back from front via axiosInstance.get("/blogs")))
+
+instead of doing double axios to get User from userId in blog instance retrieved from the first axios
+= too much axios calls to db
+we can instead use populate() of mongoose which allows you to get User instance straightaway
+e.g. if we also have comment we may have to do 3 axios calls first to blog, then to user and to comment
+instead just use mongoose.populate() to minimize call to db (quick)
+mongoose puts all data at once - including all blog,comment,user etc so that it can only get the data once, to minimize call/accessing db
+after 16mb mongoose does not work, so we only retrieve some data each time
+
+const blogs = await Blog.find({}).populate({ path: "user" });
+after .populate({ path: "user" }); this is like JOIN in mysql so now blog instances have the whole user instance as value
+to key user, instead of just userId as value to key user when we didn't add .populate() before.
+But now the user password also gets retrieved, so we use select: "email name" ro e.g. just get
+email and name from user. select:"-email -name" means select everything/retrieve everything from user EXCEPT email and user
+const blogs = await Blog.find({}).populate({
+      path: "user",
+      select: "email name",
+});
+Get everything from user except password:
+const blogs = await Blog.find({}).populate({
+      path: "user",
+      select: "-password",
+});

@@ -6,7 +6,10 @@ const { mongoose } = require("mongoose");
 
 blogRouter.get("/", async (_, res) => {
   try {
-    const blogs = await Blog.find({});
+    const blogs = await Blog.find({}).populate({
+      path: "user",
+      select: "email name",
+    });
     return res.status(200).send({ blogs });
   } catch (error) {
     return res.status(500).send({ error: error.message });

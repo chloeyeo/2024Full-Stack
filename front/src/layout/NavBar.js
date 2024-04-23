@@ -9,6 +9,7 @@ const NavBar = () => {
     { to: "/login", name: "login", auth: false },
     { to: "/register", name: "register", auth: false },
     { to: "/company", name: "company", auth: true },
+    { to: "/blog", name: "blog", auth: true },
     { to: "", name: "logout", auth: true },
   ];
   const isAuth = useSelector((state) => state.user?.isAuth);
