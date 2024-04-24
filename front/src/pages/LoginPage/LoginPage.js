@@ -17,7 +17,7 @@ const LoginPage = () => {
     reset();
   }
   const userEmail = {
-    required: "Required",
+    required: { value: true, message: "must have user email" },
     pattern: {
       value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
       message: "Invalid email address",
@@ -29,7 +29,7 @@ const LoginPage = () => {
   };
 
   const userPassword = {
-    required: "Required",
+    required: { value: true, message: "must have user password" },
     minLength: {
       value: 6,
       message: "Must be at least 6 characters",
@@ -38,7 +38,7 @@ const LoginPage = () => {
 
   return (
     <>
-      <section className="flex max-w-[400px]  m-auto mt-10 rounded-md border bg-white shadow-md">
+      <section className="flex max-w-[400px] m-auto mt-10 rounded-md border bg-white shadow-md">
         <div className="p-5 w-full">
           <h2 className="text-center text-2xl font-semibold mb-4">Login</h2>
           <hr className="mb-4" />

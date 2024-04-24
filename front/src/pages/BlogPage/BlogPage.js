@@ -1,11 +1,21 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axiosInstance from "../../utils/axios";
 import ListItem from "./BlogComp/ListItem";
+import styled from "styled-components";
+
+const PageNumber = styled.span`
+  display: inline-block;
+  padding: 10px;
+  cursor: pointer;
+  background-color: ${(props) => (props.active ? "blue" : "transparent")};
+  color: ${(props) => (props.active ? "white" : "black")};
+`;
 
 function BlogPage() {
   const [blogs, setBlogs] = useState([]);
   const [totalCnt, setTotalCnt] = useState(0);
   const [page, setPage] = useState(0);
+  const ITEMS_PER_PAGE = 7;
   useEffect(() => {
     const fetchData = async (page) => {
       try {
@@ -27,19 +37,35 @@ function BlogPage() {
         <ul>
           {blogs.map((blog, index) => {
             return (
-              // <ListItem blog={blog} index={index} no={page * 7 + index + 1} />
+              // <ListItem blog={blog} index={index} no={page * ITEMS_PER_PAGE + index + 1} />
               // for no as count backward"
               <ListItem
                 blog={blog}
                 index={index}
-                no={totalCnt - page * 7 - index}
+                no={totalCnt - page * ITEMS_PER_PAGE - index}
               />
             );
           })}
           totalCount: {totalCnt}
         </ul>
         {/* pagination */}
-        <div>pager</div>
+        <div>
+          {Array.from(
+            { length: Math.ceil(totalCnt / ITEMS_PER_PAGE) },
+            (_, index) => (
+              <PageNumber
+                className="mb-4"
+                key={`pagenumber-${index + 1}`}
+                active={index === page}
+                onClick={() => {
+                  setPage(index);
+                }}
+              >
+                {index + 1}
+              </PageNumber>
+            )
+          )}
+        </div>
       </div>
     </div>
   );

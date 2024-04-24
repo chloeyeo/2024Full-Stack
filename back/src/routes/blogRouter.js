@@ -22,6 +22,21 @@ blogRouter.get("/", async (req, res) => {
   }
 });
 
+blogRouter.get("/:blogId", async (req, res) => {
+  try {
+    let { blogId } = req.params;
+    if (!mongoose.isValidObjectId(blogId))
+      return res.status(400).send({ error: "blogId does not exist" });
+    const blog = await Blog.findById(blogId).populate({
+      path: "user",
+      select: "email name",
+    });
+    return res.status(200).send({ blog });
+  } catch (error) {
+    return res.status(500).send({ error: error.message });
+  }
+});
+
 blogRouter.post("/", async (req, res) => {
   try {
     const { title, content, userId } = req.body;
