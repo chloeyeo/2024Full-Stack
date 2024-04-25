@@ -35,7 +35,7 @@ const BlogViewPage = () => {
       }
     }
     loadBlog();
-  }, []);
+  }, [blogId]);
   useEffect(() => {
     async function loadComments() {
       try {
@@ -46,7 +46,8 @@ const BlogViewPage = () => {
       }
     }
     loadComments();
-  }, []);
+  }, [blogId]);
+  if (!blog) return null;
   const handleInsertComment = async (comment) => {
     alert(comment);
     const commentData = {
@@ -56,11 +57,12 @@ const BlogViewPage = () => {
     console.log(commentData);
     try {
       const res = axiosInstance.post(`/blog/${blogId}/comment`, commentData); // second arg is request body
-      console.log(res.data);
+      console.log("res.data.comment:", res.data.comment);
+      setComments(...comment, res.data.comment);
     } catch (error) {}
   };
-  console.log("blogId from params:", blogId);
-  if (!blog) return null; // first blog = null so it returns null
+  // console.log("blogId from params:", blogId);
+  // if (!blog) return null; // first blog = null so it returns null
   return (
     <div className="container m-auto p-4">
       <h3>Blog Content</h3>

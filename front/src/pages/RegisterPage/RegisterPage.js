@@ -1,6 +1,10 @@
 import { useForm } from "react-hook-form";
-import { toast } from "react-toastify";
-import axios from "axios";
+// import { toast } from "react-toastify";
+// import axios from "axios";
+import { useDispatch } from "react-redux";
+import { registerUser } from "../../store/thunkFunctions";
+
+const dispatch = useDispatch();
 
 const RegisterPage = () => {
   const {
@@ -16,18 +20,21 @@ const RegisterPage = () => {
       email,
       username,
       password,
+      image: "https://via.placeholder.com/600x400?text=no+user+image",
     };
     console.log(body);
-    try {
-      const url = "/user/register";
-      const response = await axios.post(url, body);
-      console.log("sign up successful", response.data);
-      toast.success("Sign Up Complete 😊");
-      reset();
-    } catch (error) {
-      console.error("request failed:", error);
-      toast.error("Sign Up Failed 😢");
-    }
+    // try {
+    //   const url = "/user/register";
+    //   const response = await axios.post(url, body);
+    //   console.log("sign up successful", response.data);
+    //   toast.success("Sign Up Complete 😊");
+    //   reset();
+    // } catch (error) {
+    //   console.error("request failed:", error);
+    //   toast.error("Sign Up Failed 😢");
+    // }
+    dispatch(registerUser(body));
+    reset();
   }
 
   const userEmail = {
