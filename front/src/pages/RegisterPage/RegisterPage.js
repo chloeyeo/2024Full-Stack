@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
-import { toast } from "react-toastify";
-import axios from "axios";
+import { useDispatch } from "react-redux";
+import { registerUser } from "../../store/thunkFunctions";
 
 const RegisterPage = () => {
   const {
@@ -11,27 +11,22 @@ const RegisterPage = () => {
     watch,
   } = useForm({ mode: "onChange" });
 
-  async function onSubmit({ email, username, password }) {
+  const dispatch = useDispatch();
+
+  async function onSubmit({ email, name, password }) {
     const body = {
       email,
-      username,
+      name,
       password,
+      image: `https://via.placeholder.com/600x400?text=no+user+image`,
     };
     console.log(body);
-    try {
-      const url = "/user/register";
-      const response = await axios.post(url, body);
-      console.log("sign up successful", response.data);
-      toast.success("Sign Up Complete 😊");
-      reset();
-    } catch (error) {
-      console.error("request failed:", error);
-      toast.error("Sign Up Failed 😢");
-    }
+    dispatch(registerUser(body));
+    reset();
   }
 
   const userEmail = {
-    required: "Required",
+    required: { value: true, message: "email is required" },
     pattern: {
       value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
       message: "Invalid email address",
@@ -42,7 +37,7 @@ const RegisterPage = () => {
     },
   };
   const userName = {
-    required: "Required",
+    required: { value: true, message: "name is required" },
     minLength: {
       value: 2,
       message: "Must be at least 2 characters",
@@ -50,14 +45,14 @@ const RegisterPage = () => {
     validate: (value) => value !== "admin" || "Nice try!",
   };
   const userPassword = {
-    required: "Required",
+    required: { value: true, message: "password is required" },
     minLength: {
       value: 6,
       message: "Must be at least 6 characters",
     },
   };
   const passwordConfirm = {
-    required: "Required",
+    required: { value: true, message: "password confirmation is required" },
     validate: (value) =>
       value === watch("password") || "Password does not match",
   };
@@ -80,11 +75,11 @@ const RegisterPage = () => {
                 id="name"
                 className="border w-full rounded-md p-2 mb-1 text-xs"
                 placeholder="Please type your username"
-                {...register("username", userName)}
+                {...register("name", userName)}
               />
-              {errors.username && (
+              {errors.name && (
                 <div className="text-red-500 font-semibold text-xs">
-                  {errors.username.message}
+                  {errors.name.message}
                 </div>
               )}
             </div>

@@ -62,9 +62,9 @@ commentRouter.get("/", async (req, res) => {
     }
 
     // const comment = await Comment.find({ blog: { _id: blogId } });
-    const comment = await Comment.find({ blog: blogId }).populate([
-      { path: "user", select: "email name" },
-    ]);
+    const comment = await Comment.find({ blog: blogId })
+      .populate([{ path: "user", select: "email name" }])
+      .sort({ createdAt: 1 });
     return res.status(200).send({ comment });
   } catch (error) {
     return res.status(500).send({ error: error.message });

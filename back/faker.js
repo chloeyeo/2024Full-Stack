@@ -12,7 +12,7 @@ const getFaker = async (userCount, blogCount) => {
       users.push(
         new User({
           // random username, email
-          username: faker.internet.userName(),
+          name: faker.internet.userName(),
           email: faker.internet.email(),
           password,
           role: 0,

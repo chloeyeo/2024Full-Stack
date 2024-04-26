@@ -1,12 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { loginUser, authUser, logoutUser } from "./thunkFunctions";
+import {
+  loginUser,
+  authUser,
+  logoutUser,
+  registerUser,
+} from "./thunkFunctions";
 import { toast } from "react-toastify";
 
 const initialState = {
   userData: {
     id: "",
     email: "",
-    username: "",
+    name: "",
     role: 0,
     image: "",
     createdAt: "",
@@ -21,6 +26,18 @@ const userSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+      .addCase(registerUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(registerUser.fulfilled, (state) => {
+        state.isLoading = false;
+        toast.success("sign up successful");
+      })
+      .addCase(registerUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+        toast.error("sign up failed");
+      })
       .addCase(loginUser.pending, (state) => {
         console.log("loginUser.pending");
         state.isLoading = true;

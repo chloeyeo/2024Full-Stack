@@ -1,4 +1,5 @@
-import { useParams, useState, useEffect } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
 import axiosInstance from "../../utils/axios";
 import styled from "styled-components";
 import CommentWrite from "./BlogComp/CommentWrite";
@@ -20,35 +21,32 @@ const BlogViewPage = () => {
   const [blog, setBlog] = useState(null);
   const [comments, setComments] = useState([]);
   const userData = useSelector((state) => state.user?.userData);
-  //   const [loading, setLoading] = useState(false);
-  // cannot put async to useEffect so must create async function
-  // then put that async function inside useEffect
+
   useEffect(() => {
     async function loadBlog() {
       try {
-        // set loading to true
         const response = await axiosInstance.get(`/blog/${blogId}`);
         setBlog(response.data);
-        // set loading to false
       } catch (error) {
         console.error(error.mesage);
       }
     }
     loadBlog();
-  }, []);
+  }, [blogId]);
   useEffect(() => {
     async function loadComments() {
       try {
         const response = await axiosInstance.get(`/blog/${blogId}/comment`);
-        setComments(response.data.comment);
+        setComments([...comments, response.data.comment]);
       } catch (error) {
         console.error(error.mesage);
       }
     }
     loadComments();
-  }, []);
+  }, [blogId]);
+  if (!blog) return null; // first blog = null so it returns null
   const handleInsertComment = async (comment) => {
-    alert(comment);
+    // alert(comment);
     const commentData = {
       content: comment,
       userId: userData.user.id,
@@ -56,11 +54,12 @@ const BlogViewPage = () => {
     console.log(commentData);
     try {
       const res = axiosInstance.post(`/blog/${blogId}/comment`, commentData); // second arg is request body
-      console.log(res.data);
-    } catch (error) {}
+      setComments([...comments, res.data.comment]);
+    } catch (error) {
+      console.error(error.message);
+    }
   };
-  console.log("blogId from params:", blogId);
-  if (!blog) return null; // first blog = null so it returns null
+
   return (
     <div className="container m-auto p-4">
       <h3>Blog Content</h3>

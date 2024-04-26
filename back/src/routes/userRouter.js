@@ -82,7 +82,7 @@ userRouter.get("/auth", auth, async (req, res) => {
   try {
     const user = {
       id: req.user.id,
-      username: req.user.username,
+      name: req.user.name,
       email: req.user.email,
       role: req.user.role,
       image: req.user.image,
