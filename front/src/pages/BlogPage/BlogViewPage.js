@@ -24,10 +24,11 @@ const BlogViewPage = () => {
 
   const deleteComment = async (commentId) => {
     try {
-      await axiosInstance.delete(`/blog/${blogId}/comment/${commentId}`);
+      await axiosInstance.delete(`/blog/${blogId}/comment/${commentId}`); // already deleted in backend
       setComments(
         comments.filter((comment) => {
-          return comment._id !== commentId;
+          // this is for UI only nothing to do with db
+          return comment._id !== commentId; // show everything except for the deleted comment in UI
         })
       );
     } catch (error) {
