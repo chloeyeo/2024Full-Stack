@@ -44,11 +44,11 @@ userRouter.post("/login", async (req, res) => {
 
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(400).send({ error: "email does not exist" });
+      return res.status(400).send({ message: "email does not exist" });
     }
     const isMatch = await compare(password, user.password);
     if (!isMatch) {
-      return res.status(400).send({ error: "wrong password" });
+      return res.status(400).send({ message: "wrong password" });
     }
 
     /* CREATE A TOKEN -- start -- */
