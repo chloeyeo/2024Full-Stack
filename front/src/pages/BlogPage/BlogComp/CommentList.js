@@ -11,7 +11,7 @@ const CommentList = ({ comment, deleteComment }) => {
   return (
     <div>
       {comment.content} / By {comment.user.name}
-      {isCommentAuthor && <button onClick={handleDelete}>delete</button>}
+      {isCommentAuthor && <button onClick={handleDelete}>[Delete]</button>}
     </div>
   );
 };
