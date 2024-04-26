@@ -22,6 +22,10 @@ const BlogViewPage = () => {
   const [comments, setComments] = useState([]);
   const userData = useSelector((state) => state.user?.userData);
 
+  const deleteComment = (commentId) => {
+    alert(commentId);
+  };
+
   useEffect(() => {
     async function loadBlog() {
       try {
@@ -73,7 +77,13 @@ const BlogViewPage = () => {
         <p>No comment</p>
       ) : (
         comments.map((comment, index) => {
-          return <CommentList key={`comment-${index}`} comment={comment} />;
+          return (
+            <CommentList
+              key={`comment-${index}`}
+              comment={comment}
+              deleteComment={deleteComment}
+            />
+          );
         })
       )}
     </div>

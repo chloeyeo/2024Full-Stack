@@ -33,9 +33,6 @@ function App() {
   console.log("pathname:", pathname);
   useEffect(() => {
     if (isAuth) dispatch(authUser());
-    // on each page visit generate new token = this token is called 'refresh token'
-    // when authUser() finds that token does not match it sees this as dispatch changed and thus runs useEffect again
-    // when authUser() checks that token indeed matches this is seen as no change to dispatch so useEffect does not get run again and stops there.
   }, [isAuth, dispatch, pathname]);
   return (
     <Routes>
