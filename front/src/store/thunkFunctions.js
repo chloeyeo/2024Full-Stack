@@ -45,7 +45,36 @@ export const authUser = createAsyncThunk(
     }
   }
 );
+export const authUser = createAsyncThunk(
+  "user/authuser",
+  async (_, thunkAPI) => {
+    try {
+      console.log("about to send get request to auth");
+      const response = await axiosInstance.get("/user/auth");
+      console.log("authorise");
+      console.log("auth response.data", response.data);
+      return response.data;
+    } catch (error) {
+      console.log("auth response error");
+      return thunkAPI.rejectWithValue(error.response.data || error.message);
+    }
+  }
+);
 
+export const logoutUser = createAsyncThunk(
+  "user/logoutuser",
+  async (_, thunkAPI) => {
+    try {
+      const response = await axiosInstance.post("/user/logout");
+      console.log("logout");
+      console.log("logout response.data", response.data);
+      return response.data;
+    } catch (error) {
+      console.log("logout response error");
+      return thunkAPI.rejectWithValue(error.response.data || error.message);
+    }
+  }
+);
 export const logoutUser = createAsyncThunk(
   "user/logoutuser",
   async (_, thunkAPI) => {
