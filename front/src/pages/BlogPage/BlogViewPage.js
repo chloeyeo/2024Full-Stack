@@ -26,6 +26,7 @@ const BlogViewPage = () => {
     try {
       await axiosInstance.delete(`/blog/${blogId}/comment/${commentId}`); // already deleted in backend
       setComments(
+        // array.filter()
         comments.filter((comment) => {
           // this is for UI only nothing to do with db
           return comment._id !== commentId; // show everything except for the deleted comment in UI
@@ -46,7 +47,7 @@ const BlogViewPage = () => {
       }
     }
     loadBlog();
-  }, [blogId]);
+  }, []);
   useEffect(() => {
     async function loadComments() {
       try {
@@ -57,7 +58,7 @@ const BlogViewPage = () => {
       }
     }
     loadComments();
-  }, [blogId]);
+  }, []);
   if (!blog) return null; // first blog = null so it returns null
   const handleInsertComment = async (comment) => {
     // alert(comment);
