@@ -22,8 +22,17 @@ const BlogViewPage = () => {
   const [comments, setComments] = useState([]);
   const userData = useSelector((state) => state.user?.userData);
 
-  const deleteComment = (commentId) => {
-    alert(commentId);
+  const deleteComment = async (commentId) => {
+    try {
+      await axiosInstance.delete(`/blog/${blogId}/comment/${commentId}`);
+      setComments(
+        comments.filter((comment) => {
+          return comment._id !== commentId;
+        })
+      );
+    } catch (error) {
+      console.error(error.message);
+    }
   };
 
   useEffect(() => {
